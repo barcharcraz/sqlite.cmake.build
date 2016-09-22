@@ -20,6 +20,7 @@ option(SQLITE_BUILD_SHARED  "Build SQLite shared library" ON)
 option(WITH_SQLITE_DEBUG    "Build SQLite debug features" OFF)
 option(WITH_SQLITE_MEMDEBUG "Build SQLite memory debug features" OFF)
 option(WITH_SQLITE_RTREE    "Build R*Tree index extension" OFF)
+option(WITH_SQLITE_UNLOCK_NOTIFY "Build unlock notify API" OFF)
 
 set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Installation directory for executables")
 set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")
@@ -70,7 +71,9 @@ endif()
 if(WITH_SQLITE_RTREE)
     add_definitions(-DSQLITE_ENABLE_RTREE)
 endif()
-
+if(WITH_SQLITE_UNLOCK_NOTIFY)
+    add_definitions(-DSQLITE_ENABLE_UNLOCK_NOTIFY)
+endif()
 if (SQLITE_BUILD_STATIC)
     # build static library
     add_library(${SQLITE_STATIC_NAME} STATIC ${SRC_LIB_FILE})
